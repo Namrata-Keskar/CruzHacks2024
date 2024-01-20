@@ -1,0 +1,49 @@
+.ServiceLanding {
+    text-align: center;
+    padding: 20px;
+    flex-direction: column;
+    
+    .loginText {
+        font-family: 'Krub', sans-serif;
+        font-style: italic;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .title {
+        font-family: 'Krub', sans-serif;
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+  
+    .buttons {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+
+        flex-direction: column; 
+        align-items: stretch;
+        justify-content: space-between;
+        padding: .1em;
+  
+        button {
+            flex: 1;
+            background-color: #BEEFF3;
+            color: black;
+            font-family: 'Krub', sans-serif;
+
+            padding: 15px 70px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px;
+    
+            &:hover {
+                background-color: #75BFC4;
+            }
+        }
+    }
+      
+}
+  

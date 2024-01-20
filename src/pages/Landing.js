@@ -1,9 +1,5 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import Food from './Food';
-import Medical from './Medical';
-import Housing from './Housing';
 
 import './Landing.scss'; 
 
@@ -37,7 +33,7 @@ function Landing() {
 
         <div className='login'>
           <p>Are you a service provider?</p>
-            <Link to="/login">
+            <Link to="/servicelanding">
                 <button>Login</button>
             </Link>
         </div>        

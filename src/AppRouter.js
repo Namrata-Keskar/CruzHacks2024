@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import ServiceLanding from './pages/ServiceLanding';
+import Register from './pages/Register';
 import Food from './pages/Food';
 import Housing from './pages/Housing';
 import Medical from './pages/Medical';
@@ -17,11 +18,13 @@ const AppRouter = () => {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/servicelanding" element={<ServiceLanding />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/food" element={<Food />} />
         <Route path="/housing" element={<Housing />} />
         <Route path="/medical" element={<Medical />} />
         <Route path="/addevent" element={<AddEvent />} />
         <Route path="/profile" element={<Profile />} />
+
       </Routes>
     </Router>
   );

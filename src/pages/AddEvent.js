@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import {app} from '../firebase';
 import 'firebase/database'
 
-import firebase from 'firebase/app';
+import "./AddEvent.scss";
 import db from '../firebase.js';
 import * as firestore from "firebase/firestore"
-//import firebase from 'firebase/app';
 
 import {getFirestore} from 'firebase/firestore/lite';
 import { toHaveDisplayValue } from '@testing-library/jest-dom/matchers';
@@ -60,28 +58,28 @@ function AddEvent() {
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
           placeholder="Enter event details"
-      />
-      <input
-          type="text"
+        />
+        <input
+          type="date"
           value={eventDate}
           onChange={(e) => setEventDate(e.target.value)}
           placeholder="Enter event date"
-      />
+        />
         <input
-        type="text"
-        value={eventLocation}
-        onChange={(e) => setEventLocation(e.target.value)}
-        placeholder="Enter event location"
-      />
-        <input
-        type="text"
-        value={eventDescription}
-        onChange={(e) => setEventDescription(e.target.value)}
-        placeholder="Enter event description"
-      />
+          type="text"
+          value={eventLocation}
+          onChange={(e) => setEventLocation(e.target.value)}
+          placeholder="Enter event location"
+        />
+        <textarea
+          type="text"
+          value={eventDescription}
+          onChange={(e) => setEventDescription(e.target.value)}
+          placeholder="Enter event description"
+        ></textarea>
 
-      <button onClick={handleSubmit}>Submit</button>
-      {/* <button>Submit</button> */}
+        <button onClick={handleSubmit}>Submit</button>
+        {/* <button>Submit</button> */}
 
     </div>
   );

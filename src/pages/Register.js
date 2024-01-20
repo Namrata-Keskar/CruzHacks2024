@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import "./Register.scss";
+import "./Register.css";
 
 function Register() {
   return (

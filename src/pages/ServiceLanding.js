@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './ServiceLanding.scss'; 
+import './ServiceLanding.css'; 
 
 
 function ServiceLanding() {

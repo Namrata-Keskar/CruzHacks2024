@@ -29,15 +29,15 @@
 }
 
 .ServiceLanding .buttons button {
-    flex: 1;
+    display: block;
+    margin: 10px auto;
+    width: 200px; 
+    padding: 10px 15px;
     background-color: #BEEFF3;
     color: black;
-    font-family: 'Krub', sans-serif;
-    padding: 15px 70px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    margin: 10px;
 }
 
 .ServiceLanding .buttons button:hover {

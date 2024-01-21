@@ -19,7 +19,7 @@ function ServiceLanding() {
         </h2>
 
         <h1 className='title'>
-            TITLE
+            HomeBase
         </h1>
 
         <div className='buttons'>

@@ -12,8 +12,12 @@ function Landing() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet" />
 
         <h1>
-            Find Homeless Services
+            HomeBase
         </h1>
+
+        <h2>
+            Ending homelessness one step at a time
+        </h2>
         
         <div className='PageButtons'>
 

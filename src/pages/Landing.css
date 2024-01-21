@@ -7,7 +7,14 @@
 .Landing h1 {
   font-family: 'Krub', sans-serif;
   font-style: italic;
-  font-size: 28px;
+  font-size: 32px;
+  margin-bottom: 1em;
+}
+
+.Landing h2 {
+  font-family: 'Krub', sans-serif;
+  font-style: italic;
+  font-size: 25px;
   margin-bottom: 1em;
 }
 

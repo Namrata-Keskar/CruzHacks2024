@@ -20,26 +20,26 @@ function MyEvents() {
   const {loggedInUser} = useContext(UserContext);
 
   // Sample data for services (replace this with data from Firebase)
-  const servicesData = [
-    {
-      eventName: 'Event 1',
-      organizerName: 'Organizer 1',
-      date: '2022-01-20',
-      location: 'Location 1',
-      description: 'Description 1',
-    },
-    {
-      eventName: 'Event 2',
-      organizerName: 'Organizer 2',
-      date: '2022-01-21',
-      location: 'Location 2',
-      description: 'Description 2',
-    },
-    // Add more service data as needed
-  ];
+  // const servicesData = [
+  //   {
+  //     eventName: 'Event 1',
+  //     organizerName: 'Organizer 1',
+  //     date: '2022-01-20',
+  //     location: 'Location 1',
+  //     description: 'Description 1',
+  //   },
+  //   {
+  //     eventName: 'Event 2',
+  //     organizerName: 'Organizer 2',
+  //     date: '2022-01-21',
+  //     location: 'Location 2',
+  //     description: 'Description 2',
+  //   },
+  //   // Add more service data as needed
+  // ];
 
 
-  console.log("In my events user:", loggedInUser);
+  // console.log("In my events user:", loggedInUser.uid);
 
   useEffect(() => {
     if (!loggedInUser) {
@@ -47,24 +47,51 @@ function MyEvents() {
     }
   }, [loggedInUser, navigate]);
 
+  const [organizations, setOrganizations] = useState([]);
+
   useEffect(() => {
-    const fetchEvents = async () => {
-      
-        try {
-            const eventsCollection = firestore.collection(db, 'event');
-            const querySnapshot = await firestore.getDocs(eventsCollection);
-            
-            const eventsData = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
-            setEvents(eventsData);
-            console.log("all events:", eventsData);
-        } catch (error) {
-            console.error('Error fetching events:', error.message);
-        }
-        
+    const fetchData = async () => {
+      const eventsCollection = firestore.collection(db, 'event');
+      const q = firestore.query(eventsCollection, firestore.where('orgId', '==', loggedInUser.uid));
+
+      try {
+        const querySnapshot = await firestore.getDocs(q);
+        const eventsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setEvents(eventsData);
+
+        const orgIds = eventsData.map(event => event.orgId);
+        const orgsCollection = firestore.collection(db, 'organizations');
+        const orgsQuerySnapshot = await firestore.getDocs(
+          firestore.query(orgsCollection, firestore.where('userId', 'in', orgIds))
+        );
+        const orgsData = orgsQuerySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setOrganizations(orgsData);
+      } catch (error) {
+        console.error(`Error fetching events:`, error);
+      }
     };
 
-    fetchEvents();
-  }, [loggedInUser]);
+    fetchData();
+  }, [events]);
+
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+      
+  //       try {
+  //           const eventsCollection = firestore.collection(db, 'event');
+  //           const querySnapshot = await firestore.getDocs(eventsCollection);
+            
+  //           const eventsData = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+  //           setEvents(eventsData);
+  //           console.log("all events:", eventsData);
+  //       } catch (error) {
+  //           console.error('Error fetching events:', error.message);
+  //       }
+        
+  //   };
+
+  //   fetchEvents();
+  // }, [loggedInUser]);
 
   const handleEdit = (event) => {
     setEditMode(true);
@@ -75,7 +102,7 @@ function MyEvents() {
     console.log("clicked saved for:", editedEvent);
 
     try {
-      const eventsCollection = firestore.collection(db, 'events');
+      const eventsCollection = firestore.collection(db, 'event');
       console.log("edited event id:", editedEvent.__id);
 
       const docRef = firestore.doc(eventsCollection, editedEvent.__id);
@@ -88,7 +115,8 @@ function MyEvents() {
             console.log("NO DOC DATA");
         }
 
-
+      console.log("The changed description is")
+      console.log(editedEvent.description)
       await firestore.updateDoc(firestore.doc(eventsCollection, editedEvent.__id), {
         name: editedEvent.name,
         date: editedEvent.date,
@@ -114,22 +142,9 @@ function MyEvents() {
     setEditedEvent((prev) => ({ ...prev, [field]: value }));
   };
 
-
   return (
     <div className="MyEvents">
       <p class="title">My Events</p>
-
-      {/* Loop through servicesData and create a card for each service */}
-      {/* {events.map((service, index) => (
-        <div key={index} className="service-card">
-          <h2>{service.name}</h2>
-          <p>Organizer: {service.orgName}</p>
-          <p>Date: {service.date}</p>
-          <p>Location: {service.location}</p>
-          <p>Description: {service.description}</p>
-        </div>
-      ))} */}
-
       {events.map((event, index) => (
         <div key={index} className="service-card">
           {editMode && editedEvent.__id === event.id ? (
@@ -164,7 +179,6 @@ function MyEvents() {
           ) : (
             <div>
               <h2>{event.name}</h2>
-              <p>Organizer: {event.orgName}</p>
               <p>Date: {event.date}</p>
               <p>Location: {event.location}</p>
               <p>Description: {event.description}</p>

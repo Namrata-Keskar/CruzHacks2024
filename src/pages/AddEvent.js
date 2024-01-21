@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import AfterEvent from '../popUps/afterEvent.js'
 
 import 'firebase/database'
+import Navbar from '../serviceNav';
+
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import "./AddEvent.css";
@@ -21,30 +26,10 @@ function AddEvent() {
   const [eventDate, setEventDate] = useState('');
   const [eventLocation, setEventLocation] = useState('');
   const [eventDescription, setEventDescription] = useState('');
-  const [category, setCategory] = useState(''); // New state for category
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [topics, setTopics] = useState([]); // State to store the list of topics
-
-
-  // const collectionRef = firestore.collection(db, 'categories');
-  // const q = query(collectionRef, where("__id", "==", "food"));
-
-  
-  // useEffect(() => {
-  //   const catCollection = firestore.collection(db, 'categories');
-  //   console.log("fhdjshf");
-  //   catCollection.get().then((firestore.QuerySnapshot) => {
-  //     console.log('docs in collection:');
-  //     firestore.QuerySnapshot.forEach((doc) => {
-  //       console.log(doc.data());
-  //     });
-  //   });
-  //   // firestore.onSnapshot(firestore.collection(db, "categories"), (snapshot) => {
-  //   //   console.log("jii");
-  //   //   console.log(snapshot.docs.map(doc => doc.data()));
-  //   // });
-  // });
+  // const [canSubmit, setCanSubmit] = useState(false);
 
   const getCollections = async () => {
     try {
@@ -78,67 +63,58 @@ function AddEvent() {
   }, [user]); 
 
   const handleSubmit = async () => { 
-    
-
-    // db.collection("event").doc().set({
-    //     name: eventLocation,
-    //     description: eventDescription,
-    // }).catch(alert);
     console.log("event name:", eventName);
     console.log("event date:", eventDate);
     console.log("event location:", eventLocation);
     console.log("event description:", eventDescription);
     
-    const eventsCollection = firestore.collection(db, 'event');
+    // if (
+    //   eventName.trim() === "" ||
+    //   eventDate.trim() === "" ||
+    //   eventLocation.trim() === "" ||
+    //   eventDescription.trim() === "" ||
+    //   selectedTopic.trim() === ""
+    // ) {
+    //   console.error('Please fill in all fields');
+    //   toast.error('Please fill in all fields');
 
-    try {
-      const docRef = await firestore.addDoc(eventsCollection, {
-        name: eventName,
-        catId: selectedTopic,
-        location: eventLocation,
-        date: eventDate,
-        description: eventDescription,
-        orgId: user.loggedInUser.uid
-      });
-      console.log('Document written with ID:', docRef.id);
-      await firestore.updateDoc(firestore.doc(eventsCollection, docRef.id), {
-        __id: docRef.id,
-      });
-  
-    } catch (error) {
-      console.error('Error adding document:', error);
-    }
+    // }  else {
+    //   setCanSubmit(true);
+    // }
+
+      const eventsCollection = firestore.collection(db, 'event');
+
+      try {
+        const docRef = await firestore.addDoc(eventsCollection, {
+          name: eventName,
+          catId: selectedTopic,
+          location: eventLocation,
+          date: eventDate,
+          description: eventDescription,
+          orgId: user.loggedInUser.uid
+        });
+        console.log('Document written with ID:', docRef.id);
+        await firestore.updateDoc(firestore.doc(eventsCollection, docRef.id), {
+          __id: docRef.id,
+        });
+        clearFields();
+
+        setOpenModal(true);
+        setTimeout(() => {
+          setOpenModal(false);
+        }, 1500);
+
+      } catch (error) {
+        console.error('Error adding document:', error);
+      }
+    
   }
+
   // Function that calls both the submit and push function of a button
   const showModal = () =>{
-    setOpenModal(false)
+    setOpenModal(true)
     handleSubmit()
   };
-
-  // const useOptions = () => {
-  //   const [loading, setLoading] = useState(true);
-  //   const [posts, setPosts] = useState([]);
-  
-
-
-  // only add in an async function
-  // const snapShot = await getDoc(q);
-    // useEffect(() => {
-    //   const unsub = firestore.onSnapshot(collectionRef, (querySnapshot) => {
-    //     const items = [];
-    //     querySnapshot.forEach((doc) =>{
-    //       items.push(doc.data());
-    //       console.log("HII");
-    //       console.log(doc.data().__id);
-    //     });
-    //     return () => {
-    //       unsub();
-    //     }
-
-    //   })
-    // })
-
- //}
 
   const handleSignOut = async () => {
     try {
@@ -150,12 +126,32 @@ function AddEvent() {
       console.error('Error signing out:', error.message);
     }
   };
-  
+
+  const clearFields = () => {
+    setEventName('');
+    setEventDate('');
+    setEventLocation('');
+    setEventDescription('');
+    setSelectedTopic('');
+  };
+
+  const goToMyEvents = async () => {
+    navigate("/myevents");
+  }
   
   return (
     // Chunk of code to add information about an event
     <div className="AddEvent">
-        <p> Add an Event </p>
+      <Navbar/>
+      <ToastContainer position="bottom-right"/>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub:ital@1&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet" />
+
+      
+        <p> ADD EVENT Page </p>
 
         {/* Now add a drop down bar to see what category they will fall into */}
         <select
@@ -195,23 +191,30 @@ function AddEvent() {
           placeholder="Enter event description"
         ></textarea>
 
-        {/* <button onClick={handleSubmit}>Submit</button> */}
-        {/* <button>Submit</button> */}
         {/* Whem submit button clicked, information will be passed to firebase
         and then the serivce provider will be asked if they want to add another event.
         If not they will go back to the home page(probably get logged out) */}
         <div>
           <button 
-          onClick={() => showModal() } 
-          className='modalButton'>
-            afterEvent
+          onClick={() => showModal(true) } 
+          className='modalButton'
+          disabled={
+            eventName.trim() === "" ||
+            eventDate.trim() === "" ||
+            eventLocation.trim() === "" ||
+            eventDescription.trim() === "" ||
+            selectedTopic.trim() === ""
+          }        
+          >
+            Submit Event
           </button>
-        <AfterEvent
-          open={openModal} 
-          onClose={() => setOpenModal(true)} />
+          <AfterEvent
+            open={openModal} 
+            onClose={() => setOpenModal(false)} />
         </div>
 
-        <button onClick={handleSignOut}>SIGN OUT</button>
+        <button className="signOut" onClick={handleSignOut}>SIGN OUT</button>
+        {/* <button className="signOut" onClick={goToMyEvents}>My Events</button> */}
     </div>
   );
 }

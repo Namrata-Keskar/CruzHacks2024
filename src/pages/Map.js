@@ -27,7 +27,7 @@ const addresses = [
   // Add more addresses as needed
 ];
 
-const Medical = () => {
+const Map = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyDrtIWBXkkbTh0yFUED8sLramXyf34ZCRU', // Replace with your API key
     libraries,
@@ -132,4 +132,4 @@ const Medical = () => {
   );
 };
 
-export default Medical;
+export default Map;

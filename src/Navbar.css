@@ -1,0 +1,66 @@
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Krub', sans-serif;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #BEEFF3;
+    color: white;
+    padding: 15px;
+}
+
+.navbar a {
+    color: black;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #75BFC4; /* Change color on hover */
+}
+
+/* Center the navbar items horizontally */
+.navbar ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style-type: none;
+}
+
+/* Remove bullet points and underlined text for list items */
+.navbar li {
+    list-style: none;
+}
+
+.navbar .left-link {
+    margin-right: auto; /* Push the Home link to the left */
+}
+
+/* Optional: Add styles for a logo or other elements */
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+/* Responsive styles: Adjust the navbar items on smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .navbar a {
+        margin: 5px 0;
+    }
+}

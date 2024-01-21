@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 
 import "./Register.css";
 
 import app from '../firebase.js';
 import * as firestore from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { useUser } from '../UserContext';
 
 const auth = getAuth(app);
 const db = firestore.getFirestore(app);
@@ -14,9 +15,13 @@ const db = firestore.getFirestore(app);
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [orgName, setOrgName] = useState('');
   const [orgLocation, setOrgLocation] = useState('');
   const [orgDescription, setOrgDescription] = useState('');
   const [error, setError] = useState(false);
+
+  const { loggedInUser, setLoggedInUser } = useUser();
+  const navigate = useNavigate();
 
   const validateInputs = () => {
     console.log("email:", email);
@@ -37,7 +42,9 @@ function Register() {
   };
 
 
-  const handleSubmit = async () => { 
+  const handleSubmit = async (e) => { 
+    e.preventDefault();
+
     if (!validateInputs()) {
       console.log("error:", error);
       return; 
@@ -56,6 +63,7 @@ function Register() {
       const docRef = await firestore.addDoc(orgCollection, {
         userId: user.uid,
         email: email,
+        orgName: orgName,
         location: orgLocation,
         description: orgDescription,
       });
@@ -65,6 +73,9 @@ function Register() {
       // await firestore.updateDoc(firestore.doc(orgCollection, docRef.id), {
       //   __id: docRef.id,
       // });
+      console.log("registered in:", user);
+      setLoggedInUser(user);
+      navigate("/addevent");
   
     } catch (error) {
       console.error('Error adding document:', error);
@@ -102,6 +113,14 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           required />
         <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          placeholder="Name" 
+          value={orgName}
+          onChange={(e) => setOrgName(e.target.value)}
+          required />
+        <input 
           type="location" 
           id="location" 
           name="username" 
@@ -118,11 +137,11 @@ function Register() {
         </textarea>
 
 
-        <Link to="/login">
-          <button type="submit" disabled={!!error} onClick={handleSubmit}>
-            Login
-          </button>
-        </Link> 
+        {/* <Link to="/login"> */}
+        <button type="submit" disabled={!!error} onClick={handleSubmit}>
+          Sign up
+        </button>
+        {/* </Link>  */}
         
       </form>
   

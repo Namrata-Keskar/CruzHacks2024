@@ -13,6 +13,7 @@ import AddEvent from './pages/AddEvent';
 import Profile from './pages/Profile';
 import ProtectedRoute from './ProtectedRoute';
 import MyEvents from './pages/MyEvents';
+import Map from './pages/Map';
 
 import app from './firebase.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -50,6 +51,7 @@ const AppRouter = () => {
           <Route path="/housing" element={<Housing />} />
           <Route path="/medical" element={<Medical />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/map" element={<Map />} />
 
 
           {/* <Route path="/addevent" element={<AddEvent />} /> */}

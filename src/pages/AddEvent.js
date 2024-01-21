@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Timestamp } from 'firebase/firestore';
+
 
 import AfterEvent from '../popUps/afterEvent.js'
 
@@ -89,7 +91,7 @@ function AddEvent() {
           name: eventName,
           catId: selectedTopic,
           location: eventLocation,
-          date: eventDate,
+          date: new Date(eventDate).toISOString(), //Timestamp.fromDate(new Date(eventDate)), // Convert JavaScript date to Firestore timestamp
           description: eventDescription,
           orgId: user.loggedInUser.uid
         });
@@ -214,6 +216,9 @@ function AddEvent() {
             open={openModal} 
             onClose={() => setOpenModal(false)} />
         </div>
+
+        {/* <button className="signOut" onClick={handleSignOut}>SIGN OUT</button> */}
+        {/* <button className="signOut" onClick={goToMyEvents}>My Events</button> */}
     </div>
     </div>
     

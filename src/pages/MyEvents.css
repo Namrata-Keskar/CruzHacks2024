@@ -1,34 +1,72 @@
 .MyEvents {
-    text-align: center;
-  }
+  font-family: 'Krub', sans-serif;
+}
 
 .title {
-    font-family: 'Krub', sans-serif;
-    font-size: 30px;
-    margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Krub', sans-serif;
+  font-size: 30px;
+  margin-bottom: 20px;
 }
-  
-  .service-card {
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 400px; /* Adjust as needed */
-  }
-  
-  .service-card h2 {
-    margin-bottom: 10px;
-  }
-  
-  .service-details {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .service-details p {
-    margin: 0;
-  }
-  
-  .description {
-    margin-top: 10px;
-  }
+
+.label {
+  text-align: left;
+}
+
+.editing-fields input,
+.editing-fields textarea {
+  font-family: 'Krub', sans-serif;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.service-card {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  /* Adjust as needed */
+}
+
+.service-card h2 {
+  margin-bottom: 10px;
+}
+
+.service-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.service-details p {
+  margin: 0;
+}
+
+.description {
+  margin-top: 10px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-family: 'Krub', sans-serif;
+  background-color: #BEEFF3; /* Button background color */
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #75BFC4; /* Hover color for the button */
+}
+
+button:disabled {
+  cursor: not-allowed;
+}

@@ -148,27 +148,26 @@ function MyEvents() {
       {events.map((event, index) => (
         <div key={index} className="service-card">
           {editMode && editedEvent.__id === event.id ? (
-            <div>
+            <div class="editing-fields">
+              <label>Event name</label>
               <input
                 type="text"
                 value={editedEvent.name}
                 onChange={(e) => handleChange('name', e.target.value)}
               />
-              <input
-                type="text"
-                value={editedEvent.orgName}
-                onChange={(e) => handleChange('orgName', e.target.value)}
-              />
+              <label>Date</label>
               <input
                 type="text"
                 value={editedEvent.date}
                 onChange={(e) => handleChange('date', e.target.value)}
               />
+              <label>Location</label>
               <input
                 type="text"
                 value={editedEvent.location}
                 onChange={(e) => handleChange('location', e.target.value)}
               />
+              <label>Description</label>
               <textarea
                 value={editedEvent.description}
                 onChange={(e) => handleChange('description', e.target.value)}

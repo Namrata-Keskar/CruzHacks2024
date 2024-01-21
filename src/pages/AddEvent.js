@@ -4,7 +4,7 @@ import AfterEvent from '../popUps/afterEvent.js'
 import 'firebase/database'
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import "./AddEvent.scss";
+import "./AddEvent.css";
 import app from '../firebase.js';
 import * as firestore from "firebase/firestore"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -21,6 +21,7 @@ function AddEvent() {
   const [eventDate, setEventDate] = useState('');
   const [eventLocation, setEventLocation] = useState('');
   const [eventDescription, setEventDescription] = useState('');
+  const [category, setCategory] = useState(''); // New state for category
   const [openModal, setOpenModal] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [topics, setTopics] = useState([]); // State to store the list of topics
@@ -87,6 +88,7 @@ function AddEvent() {
     console.log("event date:", eventDate);
     console.log("event location:", eventLocation);
     console.log("event description:", eventDescription);
+    
     const eventsCollection = firestore.collection(db, 'event');
 
     try {
@@ -106,8 +108,6 @@ function AddEvent() {
     } catch (error) {
       console.error('Error adding document:', error);
     }
-
-  
   }
   // Function that calls both the submit and push function of a button
   const showModal = () =>{
@@ -155,12 +155,26 @@ function AddEvent() {
   return (
     // Chunk of code to add information about an event
     <div className="AddEvent">
-        <p> ADD EVENT Page </p>
+        <p> Add an Event </p>
+
+        {/* Now add a drop down bar to see what category they will fall into */}
+        <select
+          value={selectedTopic}
+          onChange={(e) => setSelectedTopic(e.target.value)}
+        >
+          <option value="" disabled>Select a category</option>
+          {topics.map((topic, index) => (
+            <option key={index} value={topic.id}>
+              {topic.id}
+            </option>
+          ))}
+        </select>
+          
         <input
           type="text"
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
-          placeholder="Enter event details"
+          placeholder="Enter event name"
         />
         <input
           type="date"
@@ -173,27 +187,13 @@ function AddEvent() {
           value={eventLocation}
           onChange={(e) => setEventLocation(e.target.value)}
           placeholder="Enter event location"
-        />
+        />  
         <textarea
           type="text"
           value={eventDescription}
           onChange={(e) => setEventDescription(e.target.value)}
           placeholder="Enter event description"
         ></textarea>
-
-        {/* Now add a drop down bar to see what category they will fall into */}
-        <select
-          value={selectedTopic}
-          onChange={(e) => setSelectedTopic(e.target.value)}
-        >
-          <option value={selectedTopic} disabled>Select a topic</option>
-          {topics.map((topic, index) => (
-            <option key={index} value={topic.id}>
-              {topic.id}
-            </option>
-          ))}
-        </select>
-
 
         {/* <button onClick={handleSubmit}>Submit</button> */}
         {/* <button>Submit</button> */}
@@ -208,7 +208,7 @@ function AddEvent() {
           </button>
         <AfterEvent
           open={openModal} 
-          onClose={() => setOpenModal(false)} />
+          onClose={() => setOpenModal(true)} />
         </div>
 
         <button onClick={handleSignOut}>SIGN OUT</button>

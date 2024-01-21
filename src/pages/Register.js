@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 
-import "./Register.scss";
+import "./Register.css";
 
 import app from '../firebase.js';
 import * as firestore from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { useUser } from '../UserContext';
 
 const auth = getAuth(app);
 const db = firestore.getFirestore(app);
@@ -17,6 +18,9 @@ function Register() {
   const [orgLocation, setOrgLocation] = useState('');
   const [orgDescription, setOrgDescription] = useState('');
   const [error, setError] = useState(false);
+
+  const { loggedInUser, setLoggedInUser } = useUser();
+  const navigate = useNavigate();
 
   const validateInputs = () => {
     console.log("email:", email);
@@ -37,7 +41,9 @@ function Register() {
   };
 
 
-  const handleSubmit = async () => { 
+  const handleSubmit = async (e) => { 
+    e.preventDefault();
+
     if (!validateInputs()) {
       console.log("error:", error);
       return; 
@@ -65,6 +71,9 @@ function Register() {
       // await firestore.updateDoc(firestore.doc(orgCollection, docRef.id), {
       //   __id: docRef.id,
       // });
+      console.log("registered in:", user);
+      setLoggedInUser(user);
+      navigate("/addevent");
   
     } catch (error) {
       console.error('Error adding document:', error);
@@ -118,11 +127,11 @@ function Register() {
         </textarea>
 
 
-        <Link to="/login">
-          <button type="submit" disabled={!!error} onClick={handleSubmit}>
-            Login
-          </button>
-        </Link> 
+        {/* <Link to="/login"> */}
+        <button type="submit" disabled={!!error} onClick={handleSubmit}>
+          Login
+        </button>
+        {/* </Link>  */}
         
       </form>
   

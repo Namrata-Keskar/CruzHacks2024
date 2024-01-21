@@ -12,6 +12,7 @@ import Medical from './pages/Medical';
 import AddEvent from './pages/AddEvent';
 import Profile from './pages/Profile';
 import ProtectedRoute from './ProtectedRoute';
+import MyEvents from './pages/MyEvents';
 
 import app from './firebase.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -56,6 +57,11 @@ const AppRouter = () => {
           <Route
             path="/addevent"
             element={isAuthenticated ? <AddEvent /> : <Navigate to="/" />}
+          />
+          {/* <Route path="/myevents" element={<MyEvents />} /> */}
+          <Route
+            path="/myevents"
+            element={isAuthenticated ? <MyEvents /> : <Navigate to="/" />}
           />
 
         </Routes>

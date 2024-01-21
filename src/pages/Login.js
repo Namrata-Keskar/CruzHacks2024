@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import "./Login.scss";
+import "./Login.css";
 
 import app from '../firebase.js';
 import * as firestore from "firebase/firestore";

@@ -9,8 +9,8 @@ const db = firestore.getFirestore(app);
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '70vw',
-  height: '70vh',
+  width: '400px',
+  height: '400px',
 };
 
 const center = {
@@ -27,7 +27,7 @@ const addresses = [
   // Add more addresses as needed
 ];
 
-const Map = () => {
+const Map = ({ category }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyDrtIWBXkkbTh0yFUED8sLramXyf34ZCRU', // Replace with your API key
     libraries,
@@ -39,13 +39,16 @@ const Map = () => {
   const [dbaddress, setDbAddress] = useState([]);
 
     const getCollections = async () => {
+
       try {
-        const dataCollection = firestore.collection(db, "locations");
-        const dataSnapshot = await firestore.getDocs(dataCollection);
-        console.log("data snapshot:", dataSnapshot);
-        const list = dataSnapshot.docs.map(doc => doc.data());
-        console.log("list:", list);
-        // setDbAddress(list.map(item=>item.location));
+        
+        const dataCollection = firestore.collection(db, 'event');
+        const q = firestore.query(dataCollection, firestore.where('catId', '==', category));
+        const querySnapshot = await firestore.getDocs(q);
+  
+        const list = querySnapshot.docs.map((doc) => doc.data().location);
+        console.log("List of addresses:", list);
+
         setDbAddress(list);
 
       } catch {
@@ -54,7 +57,7 @@ const Map = () => {
     }
     useEffect(() => {
       getCollections();
-    }, []);
+    }, [category]);
 
 
 
@@ -97,9 +100,10 @@ const Map = () => {
     Geocode.setApiKey('AIzaSyDrtIWBXkkbTh0yFUED8sLramXyf34ZCRU'); // Replace with your API key
     Promise.all(
       dbaddress.map((address) =>
-        Geocode.fromAddress(address.location).then(
+        Geocode.fromAddress(address).then(
           (response) => response.results[0].geometry.location
         )
+
       )
     ).then((addressCoordinates) => {
       setAddressMarkers(addressCoordinates.map((coordinate, index) => ({ id: index, position: coordinate })));
@@ -116,7 +120,7 @@ const Map = () => {
 
   return (
     <div>
-      <p>Medical Page</p>
+      <p>Map Page</p>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}

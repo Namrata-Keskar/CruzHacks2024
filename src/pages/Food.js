@@ -17,7 +17,7 @@ function Food() {
         <SharedCard category="Food" />
       </div>
       <div className='map'>
-        <Map />
+        <Map category="Food" />
       </div>
 
     </div>

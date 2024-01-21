@@ -27,7 +27,7 @@ const addresses = [
   // Add more addresses as needed
 ];
 
-const Map = () => {
+const Map = ({ category }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyDrtIWBXkkbTh0yFUED8sLramXyf34ZCRU', // Replace with your API key
     libraries,
@@ -39,13 +39,14 @@ const Map = () => {
   const [dbaddress, setDbAddress] = useState([]);
 
     const getCollections = async () => {
+
       try {
-        const dataCollection = firestore.collection(db, "locations");
-        const dataSnapshot = await firestore.getDocs(dataCollection);
-        console.log("data snapshot:", dataSnapshot);
-        const list = dataSnapshot.docs.map(doc => doc.data());
-        console.log("list:", list);
-        // setDbAddress(list.map(item=>item.location));
+        
+        const dataCollection = firestore.collection(db, 'event');
+        const q = firestore.query(dataCollection, firestore.where('catId', '==', category));
+        const querySnapshot = await firestore.getDocs(q);
+  
+        const list = querySnapshot.docs.map((doc) => doc.data().location);
         setDbAddress(list);
 
       } catch {
@@ -54,7 +55,7 @@ const Map = () => {
     }
     useEffect(() => {
       getCollections();
-    }, []);
+    }, [category]);
 
 
 

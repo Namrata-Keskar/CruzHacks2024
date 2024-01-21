@@ -21,7 +21,7 @@
 
 .Landing .PageButtons button {
   flex: 1;
-  width: 51%;
+  width: 40vw;
   background-color: #BEEFF3;
   color: black;
   font-family: 'Krub', sans-serif;
@@ -50,7 +50,7 @@
 .Landing .login button {
   background-color: #BEEFF3;
   font-family: 'Krub', sans-serif;
-  color: white;
+  color: black;
   padding: 5px 10px;
   border: none;
   border-radius: 5px;

@@ -27,7 +27,7 @@ function AddEvent() {
   const [openModal, setOpenModal] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [topics, setTopics] = useState([]); // State to store the list of topics
-  const [canSubmit, setCanSubmit] = useState(false);
+  // const [canSubmit, setCanSubmit] = useState(false);
 
   const getCollections = async () => {
     try {
@@ -66,20 +66,19 @@ function AddEvent() {
     console.log("event location:", eventLocation);
     console.log("event description:", eventDescription);
     
-    if (
-      eventName.trim() === "" ||
-      eventDate.trim() === "" ||
-      eventLocation.trim() === "" ||
-      eventDescription.trim() === "" ||
-      selectedTopic.trim() === ""
-    ) {
-      console.error('Please fill in all fields');
-      toast.error('Please fill in all fields');
+    // if (
+    //   eventName.trim() === "" ||
+    //   eventDate.trim() === "" ||
+    //   eventLocation.trim() === "" ||
+    //   eventDescription.trim() === "" ||
+    //   selectedTopic.trim() === ""
+    // ) {
+    //   console.error('Please fill in all fields');
+    //   toast.error('Please fill in all fields');
 
-      return;
-    }  else {
-      setCanSubmit(true);
-    
+    // }  else {
+    //   setCanSubmit(true);
+    // }
 
       const eventsCollection = firestore.collection(db, 'event');
 
@@ -106,7 +105,7 @@ function AddEvent() {
       } catch (error) {
         console.error('Error adding document:', error);
       }
-    }
+    
   }
 
   // Function that calls both the submit and push function of a button
@@ -193,7 +192,14 @@ function AddEvent() {
           <button 
           onClick={() => showModal(true) } 
           className='modalButton'
-          disabled={!canSubmit}  
+          disabled={
+            eventName.trim() === "" ||
+            eventDate.trim() === "" ||
+            eventLocation.trim() === "" ||
+            eventDescription.trim() === "" ||
+            selectedTopic.trim() === ""
+          }
+                  
           >
             Submit Event
           </button>

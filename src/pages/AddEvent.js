@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'firebase/database'
 
-import "./AddEvent.scss";
+import "./AddEvent.css";
 import db from '../firebase.js';
 import * as firestore from "firebase/firestore"
 

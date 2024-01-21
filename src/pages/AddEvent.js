@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AfterEvent from '../popUps/afterEvent.js'
 
 import 'firebase/database'
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import "./AddEvent.scss";
-import db from '../firebase.js';
+import app from '../firebase.js';
 import * as firestore from "firebase/firestore"
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
-import {getFirestore} from 'firebase/firestore/lite';
-import { toHaveDisplayValue } from '@testing-library/jest-dom/matchers';
+import UserContext from '../UserContext';
+
+const auth = getAuth(app);
+const db = firestore.getFirestore(app);
+
 
 function AddEvent() {
 
@@ -63,7 +68,21 @@ function AddEvent() {
   }, [topics]);
 
 
+  const navigate = useNavigate();
+
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    console.log('Current userID:', user.loggedInUser.uid);
+  }, [user]); 
+
   const handleSubmit = async () => { 
+    
+
+    // db.collection("event").doc().set({
+    //     name: eventLocation,
+    //     description: eventDescription,
+    // }).catch(alert);
     console.log("event name:", eventName);
     console.log("event date:", eventDate);
     console.log("event location:", eventLocation);
@@ -77,7 +96,7 @@ function AddEvent() {
         location: eventLocation,
         date: eventDate,
         description: eventDescription,
-        orgId: "temp"
+        orgId: user.loggedInUser.uid
       });
       console.log('Document written with ID:', docRef.id);
       await firestore.updateDoc(firestore.doc(eventsCollection, docRef.id), {
@@ -87,6 +106,8 @@ function AddEvent() {
     } catch (error) {
       console.error('Error adding document:', error);
     }
+
+  
   }
   // Function that calls both the submit and push function of a button
   const showModal = () =>{
@@ -119,6 +140,17 @@ function AddEvent() {
 
  //}
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log('User signed out successfully');
+      navigate("/");
+
+    } catch (error) {
+      console.error('Error signing out:', error.message);
+    }
+  };
+  
   
   return (
     // Chunk of code to add information about an event
@@ -149,45 +181,37 @@ function AddEvent() {
           placeholder="Enter event description"
         ></textarea>
 
-      {/* Now add a drop down bar to see what category they will fall into */}
-      <select
-        value={selectedTopic}
-        onChange={(e) => setSelectedTopic(e.target.value)}
-      >
-        <option value={selectedTopic} disabled>Select a topic</option>
-        {topics.map((topic, index) => (
-          <option key={index} value={topic.id}>
-            {topic.id}
-          </option>
-        ))}
-      </select>
+        {/* Now add a drop down bar to see what category they will fall into */}
+        <select
+          value={selectedTopic}
+          onChange={(e) => setSelectedTopic(e.target.value)}
+        >
+          <option value={selectedTopic} disabled>Select a topic</option>
+          {topics.map((topic, index) => (
+            <option key={index} value={topic.id}>
+              {topic.id}
+            </option>
+          ))}
+        </select>
 
 
-      {/* <select value={selectedTopic} onChange={e=>setSelectedTopic(e.target.value)}>
-          {
-            topics.map(opt=><option>{opt}</option>)
-          }
+        {/* <button onClick={handleSubmit}>Submit</button> */}
+        {/* <button>Submit</button> */}
+        {/* Whem submit button clicked, information will be passed to firebase
+        and then the serivce provider will be asked if they want to add another event.
+        If not they will go back to the home page(probably get logged out) */}
+        <div>
+          <button 
+          onClick={() => showModal() } 
+          className='modalButton'>
+            afterEvent
+          </button>
+        <AfterEvent
+          open={openModal} 
+          onClose={() => setOpenModal(false)} />
+        </div>
 
-      </select> */}
-
-       
-      {/* Whem submit button clicked, information will be passed to firebase
-      and then the serivce provider will be asked if they want to add another event.
-      If not they will go back to the home page(probably get logged out) */}
-      <div>
-        <button 
-        onClick={() => showModal() } 
-        className='modalButton'>
-          afterEvent
-        </button>
-      <AfterEvent
-        open={openModal} 
-        onClose={() => setOpenModal(false)} />
-      </div>
-
-      
-
-
+        <button onClick={handleSignOut}>SIGN OUT</button>
     </div>
   );
 }

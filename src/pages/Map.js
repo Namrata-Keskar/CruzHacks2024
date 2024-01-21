@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import Geocode from 'react-geocode';
+import app from '../firebase.js';
+import * as firestore from "firebase/firestore"
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+
+const db = firestore.getFirestore(app);
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -14,6 +19,7 @@ const center = {
 };
 
 const addresses = [
+  
   '1510 Capitola Rd, Santa Cruz',
   '204 E Beach St, Watsonville',
   '250 Locust St, Santa Cruz',
@@ -30,6 +36,29 @@ const Medical = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [userAddress, setUserAddress] = useState(null);
   const [addressMarkers, setAddressMarkers] = useState([]);
+  const [dbaddress, setDbAddress] = useState([]);
+
+    const getCollections = async () => {
+      try {
+        const dataCollection = firestore.collection(db, "locations");
+        const dataSnapshot = await firestore.getDocs(dataCollection);
+        console.log("data snapshot:", dataSnapshot);
+        const list = dataSnapshot.docs.map(doc => doc.data());
+        console.log("list:", list);
+        // setDbAddress(list.map(item=>item.location));
+        setDbAddress(list);
+
+      } catch {
+        console.log("error");
+      }
+    }
+    useEffect(() => {
+      getCollections();
+    }, []);
+
+
+
+
 
   useEffect(() => {
     // Check if the browser supports geolocation
@@ -67,15 +96,15 @@ const Medical = () => {
     // Convert addresses to coordinates using Geocode
     Geocode.setApiKey('AIzaSyDrtIWBXkkbTh0yFUED8sLramXyf34ZCRU'); // Replace with your API key
     Promise.all(
-      addresses.map((address) =>
-        Geocode.fromAddress(address).then(
+      dbaddress.map((address) =>
+        Geocode.fromAddress(address.location).then(
           (response) => response.results[0].geometry.location
         )
       )
     ).then((addressCoordinates) => {
       setAddressMarkers(addressCoordinates.map((coordinate, index) => ({ id: index, position: coordinate })));
     });
-  }, [isLoaded]); // Run the effect when isLoaded changes
+  }, [isLoaded, dbaddress]); // Run the effect when isLoaded changes
 
   if (loadError) {
     return <div>Error loading maps</div>;

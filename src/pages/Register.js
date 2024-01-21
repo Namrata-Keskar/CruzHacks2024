@@ -15,6 +15,7 @@ const db = firestore.getFirestore(app);
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [orgName, setOrgName] = useState('');
   const [orgLocation, setOrgLocation] = useState('');
   const [orgDescription, setOrgDescription] = useState('');
   const [error, setError] = useState(false);
@@ -62,6 +63,7 @@ function Register() {
       const docRef = await firestore.addDoc(orgCollection, {
         userId: user.uid,
         email: email,
+        orgName: orgName,
         location: orgLocation,
         description: orgDescription,
       });
@@ -111,6 +113,14 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           required />
         <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          placeholder="Name" 
+          value={orgName}
+          onChange={(e) => setOrgName(e.target.value)}
+          required />
+        <input 
           type="location" 
           id="location" 
           name="username" 
@@ -129,7 +139,7 @@ function Register() {
 
         {/* <Link to="/login"> */}
         <button type="submit" disabled={!!error} onClick={handleSubmit}>
-          Login
+          Sign up
         </button>
         {/* </Link>  */}
         

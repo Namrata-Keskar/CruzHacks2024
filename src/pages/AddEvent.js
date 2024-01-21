@@ -143,8 +143,10 @@ function AddEvent() {
   
   return (
     // Chunk of code to add information about an event
-    <div className="AddEvent">
+    <div>
       <Navbar/>
+      <div className="AddEvent">
+      
       <ToastContainer position="bottom-right"/>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -153,7 +155,7 @@ function AddEvent() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet" />
 
       
-        <p> ADD EVENT Page </p>
+        <p class="title"> Add Event </p>
 
         {/* Now add a drop down bar to see what category they will fall into */}
         <select
@@ -218,6 +220,8 @@ function AddEvent() {
         {/* <button className="signOut" onClick={handleSignOut}>SIGN OUT</button> */}
         {/* <button className="signOut" onClick={goToMyEvents}>My Events</button> */}
     </div>
+    </div>
+    
   );
 }
 

@@ -15,7 +15,7 @@ const Navbar = () => {
       <ul>
         <li><Link to="/addevent">Add Event</Link></li>
         <li><Link to="/myevents">My Events</Link></li>
-        <li className="left-link"><Link to="/">Log Out</Link></li>
+        <li><Link to="/">Log Out</Link></li>
         {/* <li><Link to="/profile">My Profile</Link></li> */}
       </ul>
     </nav>

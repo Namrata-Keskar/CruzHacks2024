@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useEffect, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AfterEvent from '../popUps/afterEvent.js'
 
 import 'firebase/database'
@@ -181,8 +181,35 @@ function AddEvent() {
           placeholder="Enter event description"
         ></textarea>
 
-        <button onClick={handleSubmit}>Submit</button>
+        {/* Now add a drop down bar to see what category they will fall into */}
+        <select
+          value={selectedTopic}
+          onChange={(e) => setSelectedTopic(e.target.value)}
+        >
+          <option value={selectedTopic} disabled>Select a topic</option>
+          {topics.map((topic, index) => (
+            <option key={index} value={topic.id}>
+              {topic.id}
+            </option>
+          ))}
+        </select>
+
+
+        {/* <button onClick={handleSubmit}>Submit</button> */}
         {/* <button>Submit</button> */}
+        {/* Whem submit button clicked, information will be passed to firebase
+        and then the serivce provider will be asked if they want to add another event.
+        If not they will go back to the home page(probably get logged out) */}
+        <div>
+          <button 
+          onClick={() => showModal() } 
+          className='modalButton'>
+            afterEvent
+          </button>
+        <AfterEvent
+          open={openModal} 
+          onClose={() => setOpenModal(false)} />
+        </div>
 
         <button onClick={handleSignOut}>SIGN OUT</button>
     </div>

@@ -9,8 +9,8 @@ const db = firestore.getFirestore(app);
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '70vw',
-  height: '70vh',
+  width: '400px',
+  height: '400px',
 };
 
 const center = {
@@ -116,7 +116,7 @@ const Map = () => {
 
   return (
     <div>
-      <p>Medical Page</p>
+      <p>Map Page</p>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}

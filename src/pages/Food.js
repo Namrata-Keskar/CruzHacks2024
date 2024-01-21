@@ -11,11 +11,8 @@ function Food() {
     
     <div className="Food">
       <Navbar/>
-      <SharedCard category="food" />
-        <p>
-            FOOD Page
-        </p>
-        
+      <SharedCard category="Food" />
+
     </div>
   );
 }

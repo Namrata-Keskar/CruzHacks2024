@@ -115,6 +115,11 @@ const Map = () => {
 
   return (
 <div>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub:ital@1&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet" />
+
     <p>Medical Page</p>
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
@@ -142,9 +147,24 @@ const Map = () => {
         <InfoWindow
           position={selectedMarker.position}
           onCloseClick={handleCloseInfoWindow}
+          options={{ pixelOffset: new window.google.maps.Size(0, -10) }}
         >
-        <div style={{ padding: '10px', fontSize: '14px', maxWidth: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <p style={{ margin: '0', fontWeight: 'bold' }}>{selectedMarker.name}</p>
+        <div style={
+          { 
+            padding: '5px', 
+            fontSize: '14px', 
+            maxWidth: '200px', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+          <p style={{
+            margin: '0',
+            marginTop: '-35px', 
+            fontWeight: 'bold' ,
+            fontFamily: 'Krub',
+            }}>{selectedMarker.name}</p>
         </div>
         </InfoWindow>
       )}

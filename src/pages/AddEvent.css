@@ -1,0 +1,57 @@
+/* AddEvent.css */
+
+.AddEvent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f0f0f0; /* Light gray background color */
+  border-radius: 10px;
+  padding: 20px;
+  width: 70%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width of the box */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+}
+
+.AddEvent p {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.AddEvent input,
+.AddEvent textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.AddEvent button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #008CBA; /* Button background color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.AddEvent button:hover {
+  background-color: #006798; /* Hover color for the button */
+}
+
+.AddEvent select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px;
+  box-sizing: border-box;
+}

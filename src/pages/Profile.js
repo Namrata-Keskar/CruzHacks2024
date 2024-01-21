@@ -20,7 +20,7 @@ function Profile() {
         {/* <textarea id="description" placeholder="Description" required></textarea> */}
 
         
-        <Link to="/login">
+        <Link to="/">
           <button type="submit">Log Out</button>
         </Link>
         

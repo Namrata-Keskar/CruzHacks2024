@@ -133,7 +133,9 @@ function AddEvent() {
     setSelectedTopic('');
   };
 
-  
+  const goToMyEvents = async () => {
+    navigate("/myevents");
+  }
   
   return (
     // Chunk of code to add information about an event
@@ -208,6 +210,7 @@ function AddEvent() {
         </div>
 
         <button className="signOut" onClick={handleSignOut}>SIGN OUT</button>
+        <button className="signOut" onClick={goToMyEvents}>My Events</button>
     </div>
   );
 }

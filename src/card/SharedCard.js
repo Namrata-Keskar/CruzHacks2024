@@ -17,6 +17,13 @@ const SharedCard = ({ category }) => {
       try {
         const querySnapshot = await firestore.getDocs(q);
         const eventsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        eventsData.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateA - dateB;
+        });
+
         setEvents(eventsData);
 
         const orgIds = eventsData.map(event => event.orgId);

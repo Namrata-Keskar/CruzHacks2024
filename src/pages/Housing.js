@@ -1,5 +1,6 @@
 import React from 'react';
 import './Housing.css';
+import Navbar from '../consumerNav';
 
 function Housing() {
   // Sample data for services (replace this with data from Firebase)
@@ -23,6 +24,7 @@ function Housing() {
 
   return (
     <div className="Housing">
+      <Navbar/>
       <p class="title">Housing Services</p>
 
       {/* Loop through servicesData and create a card for each service */}

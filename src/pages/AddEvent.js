@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import 'firebase/database'
+import Navbar from '../serviceNav';
+
 
 import "./AddEvent.css";
 import db from '../firebase.js';
@@ -52,6 +54,7 @@ function AddEvent() {
   
   return (
     <div className="AddEvent">
+      <Navbar/>
         <p> ADD EVENT Page </p>
         <input
           type="text"

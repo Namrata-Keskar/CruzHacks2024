@@ -6,6 +6,7 @@ import * as firestore from "firebase/firestore"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import UserContext from '../UserContext';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../serviceNav';
 
 const auth = getAuth(app);
 const db = firestore.getFirestore(app);
@@ -117,6 +118,7 @@ function MyEvents() {
 
   return (
     <div className="MyEvents">
+        <Navbar />
       <p class="title">My Events</p>
 
       {/* Loop through servicesData and create a card for each service */}
@@ -130,7 +132,7 @@ function MyEvents() {
         </div>
       ))} */}
 
-      {events.map((event, index) => (
+      {/* {events.map((event, index) => (
         <div key={index} className="service-card">
           {editMode && editedEvent.__id === event.id ? (
             <div>
@@ -172,7 +174,7 @@ function MyEvents() {
             </div>
           )}
         </div>
-      ))}
+      ))} */}
 
 
     </div>

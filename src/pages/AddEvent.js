@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import AfterEvent from '../popUps/afterEvent.js'
 
 import 'firebase/database'
+import Navbar from '../serviceNav';
+
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import "./AddEvent.css";
@@ -140,6 +142,7 @@ function AddEvent() {
   return (
     // Chunk of code to add information about an event
     <div className="AddEvent">
+      <Navbar/>
       <ToastContainer position="bottom-right"/>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -147,7 +150,8 @@ function AddEvent() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub:ital@1&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet" />
 
-        <p> Add an Event </p>
+      
+        <p> ADD EVENT Page </p>
 
         {/* Now add a drop down bar to see what category they will fall into */}
         <select
@@ -210,7 +214,7 @@ function AddEvent() {
         </div>
 
         <button className="signOut" onClick={handleSignOut}>SIGN OUT</button>
-        <button className="signOut" onClick={goToMyEvents}>My Events</button>
+        {/* <button className="signOut" onClick={goToMyEvents}>My Events</button> */}
     </div>
   );
 }

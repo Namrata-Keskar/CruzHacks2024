@@ -9,8 +9,8 @@ const db = firestore.getFirestore(app);
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '70vw',
-  height: '70vh',
+  width: '400px',
+  height: '400px',
 };
 
 const center = {
@@ -26,7 +26,7 @@ const addresses = [
   // Add more addresses as needed
 ];
 
-const Map = () => {
+const Map = ({ category }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyDrtIWBXkkbTh0yFUED8sLramXyf34ZCRU', // Replace with your API key
     libraries,
@@ -38,20 +38,26 @@ const Map = () => {
   const [dbaddress, setDbAddress] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
 
-  const getCollections = async () => {
-    try {
-      const dataCollection = firestore.collection(db, "locations");
-      const dataSnapshot = await firestore.getDocs(dataCollection);
-      const list = dataSnapshot.docs.map(doc => doc.data());
-      setDbAddress(list);
-    } catch (error) {
-      console.error("Error fetching collections:", error);
-    }
-  }
+    const getCollections = async () => {
 
-  useEffect(() => {
-    getCollections();
-  }, []);
+      try {
+        
+        const dataCollection = firestore.collection(db, 'event');
+        const q = firestore.query(dataCollection, firestore.where('catId', '==', category));
+        const querySnapshot = await firestore.getDocs(q);
+  
+        const list = querySnapshot.docs.map((doc) => doc.data());
+        console.log("List of addresses:", list);
+
+        setDbAddress(list);
+
+      } catch {
+        console.log("error");
+      }
+    }
+    useEffect(() => {
+      getCollections();
+    }, [category]);
 
   useEffect(() => {
     // Check if the browser supports geolocation
@@ -90,6 +96,7 @@ const Map = () => {
         Geocode.fromAddress(address.location).then(
           (response) => response.results[0].geometry.location
         )
+
       )
     ).then((addressCoordinates) => {
       setAddressMarkers(addressCoordinates.map((coordinate, index) => ({ id: index, position: coordinate, name: dbaddress[index].name })));
@@ -120,7 +127,7 @@ const Map = () => {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub:ital@1&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Krub&family=Montserrat&family=Nunito:wght@500&display=swap" rel="stylesheet" />
 
-    <p>Medical Page</p>
+    <p>Map Page</p>
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
       zoom={10}

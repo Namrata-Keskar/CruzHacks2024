@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import 'firebase/database'
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import "./AddEvent.scss";
-import db from '../firebase.js';
+import app from '../firebase.js';
 import * as firestore from "firebase/firestore"
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
-import {getFirestore} from 'firebase/firestore/lite';
-import { toHaveDisplayValue } from '@testing-library/jest-dom/matchers';
+import UserContext from '../UserContext';
+
+const auth = getAuth(app);
+const db = firestore.getFirestore(app);
+
 
 function AddEvent() {
 
@@ -15,13 +20,16 @@ function AddEvent() {
   const [eventLocation, setEventLocation] = useState('');
   const [eventDescription, setEventDescription] = useState('');
 
+  const navigate = useNavigate();
+
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    console.log('Current userID:', user.loggedInUser.uid);
+  }, [user]); 
+
   const handleSubmit = async () => { 
     
-
-    // db.collection("event").doc().set({
-    //     name: eventLocation,
-    //     description: eventDescription,
-    // }).catch(alert);
     console.log("event name:", eventName);
     console.log("event date:", eventDate);
     console.log("event location:", eventLocation);
@@ -35,7 +43,7 @@ function AddEvent() {
         location: eventLocation,
         date: eventDate,
         description: eventDescription,
-        orgId: "temp"
+        orgId: user.loggedInUser.uid
       });
       console.log('Document written with ID:', docRef.id);
       await firestore.updateDoc(firestore.doc(eventsCollection, docRef.id), {
@@ -45,10 +53,20 @@ function AddEvent() {
     } catch (error) {
       console.error('Error adding document:', error);
     }
-
   
   }
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log('User signed out successfully');
+      navigate("/");
+
+    } catch (error) {
+      console.error('Error signing out:', error.message);
+    }
+  };
+  
   
   return (
     <div className="AddEvent">
@@ -81,6 +99,7 @@ function AddEvent() {
         <button onClick={handleSubmit}>Submit</button>
         {/* <button>Submit</button> */}
 
+        <button onClick={handleSignOut}>SIGN OUT</button>
     </div>
   );
 }

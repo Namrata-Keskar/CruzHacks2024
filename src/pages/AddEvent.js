@@ -215,7 +215,7 @@ function AddEvent() {
             onClose={() => setOpenModal(false)} />
         </div>
 
-        <button className="signOut" onClick={handleSignOut}>SIGN OUT</button>
+        {/* <button className="signOut" onClick={handleSignOut}>SIGN OUT</button> */}
         {/* <button className="signOut" onClick={goToMyEvents}>My Events</button> */}
     </div>
   );

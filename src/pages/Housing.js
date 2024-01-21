@@ -10,7 +10,7 @@ function Housing() {
   return (
     <div>
     <Navbar/>
-      <SharedCard category="housing" />
+      <SharedCard category="Housing" />
     </div>
   );
 }

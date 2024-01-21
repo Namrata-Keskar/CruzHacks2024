@@ -1,9 +1,7 @@
-.Housing {
-    text-align: center;
-  }
 
 .title {
     font-family: 'Krub', sans-serif;
+    text-align: center;
     font-size: 30px;
     margin-bottom: 20px;
 }

@@ -10,12 +10,8 @@ function Medical() {
   return (
     <div className="Medical">
       <Navbar/>
-      <SharedCard category="medical" />
+      <SharedCard category="Medical" />
       
-        <p>
-            MEDICAL Page
-        </p>
-        
     </div>
   );
 }

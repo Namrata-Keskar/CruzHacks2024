@@ -28,6 +28,7 @@ const afterEvent = ({ open, onClose }) => {
           <div className='content'>
             <p>Event Added!</p>
           </div>
+          
         </div>
       </div>
     </div>

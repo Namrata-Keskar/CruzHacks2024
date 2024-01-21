@@ -198,8 +198,7 @@ function AddEvent() {
             eventLocation.trim() === "" ||
             eventDescription.trim() === "" ||
             selectedTopic.trim() === ""
-          }
-                  
+          }        
           >
             Submit Event
           </button>

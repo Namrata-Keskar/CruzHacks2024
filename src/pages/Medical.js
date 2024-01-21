@@ -18,6 +18,6 @@ function Medical() {
         
     </div>
   );
-}
+};
 
 export default Medical;

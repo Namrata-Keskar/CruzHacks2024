@@ -114,35 +114,43 @@ const Map = () => {
   }
 
   return (
-    <div>
-      <p>Medical Page</p>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={11}
-        center={userLocation || center}
-      >
-        {userLocation && <Marker position={userLocation} label="You are here" />}
-        {addressMarkers.map((marker) => (
-          <Marker
-            key={marker.id}
-            position={marker.position}
-            icon={{ fillColor: 'blue', fillOpacity: 0.8, path: window.google.maps.SymbolPath.CIRCLE, scale: 8, strokeColor: 'white', strokeWeight: 3 }}
-            onClick={() => handleMarkerClick(marker)}
-          />
-        ))}
-        {selectedMarker && (
-          <InfoWindow
-            position={selectedMarker.position}
-            onCloseClick={handleCloseInfoWindow}
-          >
-            <div style={{ padding: '1px', fontSize: '14px', maxWidth: '200px', textAlign: 'center' }}>
-            <p style={{ margin: '0', fontWeight: 'bold' }}>{selectedMarker.name}</p>
-          </div>
-          </InfoWindow>
-        )}
-      </GoogleMap>
-      {userAddress && <p>Your Current Address: {userAddress}</p>}
-    </div>
+<div>
+    <p>Medical Page</p>
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      zoom={10}
+      center={userLocation || center}
+    >
+      {userLocation && <Marker position={userLocation} label="You are here" />}
+      {addressMarkers.map((marker) => (
+        <Marker
+          key={marker.id}
+          position={marker.position}
+          icon={{
+            fillColor: 'blue',
+            fillOpacity: 1,
+            path: window.google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            strokeColor: 'white',
+            strokeWeight: 3,
+          }}
+          onClick={() => handleMarkerClick(marker)}
+          defaultCursor="pointer"
+        />
+      ))}
+      {selectedMarker && (
+        <InfoWindow
+          position={selectedMarker.position}
+          onCloseClick={handleCloseInfoWindow}
+        >
+        <div style={{ padding: '10px', fontSize: '14px', maxWidth: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p style={{ margin: '0', fontWeight: 'bold' }}>{selectedMarker.name}</p>
+        </div>
+        </InfoWindow>
+      )}
+    </GoogleMap>
+    {userAddress && <p>Your Current Address: {userAddress}</p>}
+  </div>
   );
 };
 

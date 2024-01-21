@@ -20,10 +20,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  // const {loggedInUser, setLoggedInUser} = useContext(UserContext);
-  // console.log('Use Context user at start:', loggedInUser);
-  // setLoggedInUser("CHANGED USER");
-  // console.log('Use Context user at start:', loggedInUser);
   const { loggedInUser, setLoggedInUser } = useUser();
 
   const navigate = useNavigate();
@@ -42,8 +38,6 @@ function Login() {
       // navigate("/addevent");
       onAuthStateChanged(auth, (user) => {
         console.log("in login in:", user);
-        // navigate('/addevent', { state: { user } });
-        // setUser({loggedInUser: user});
         setLoggedInUser(user);
         navigate("/addevent");
 

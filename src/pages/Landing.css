@@ -1,0 +1,58 @@
+.Landing {
+  text-align: center;
+  padding: 20px;
+  height: 90%;
+}
+
+.Landing h1 {
+  font-family: 'Krub', sans-serif;
+  font-style: italic;
+  font-size: 28px;
+  margin-bottom: 1em;
+}
+
+.Landing .PageButtons {
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Landing .PageButtons button {
+  flex: 1;
+  width: 40vw;
+  background-color: #BEEFF3;
+  color: black;
+  font-family: 'Krub', sans-serif;
+  font-size: 1.5em;
+  height: 20vh;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.Landing .PageButtons button:hover {
+  background-color: #75BFC4;
+}
+
+.Landing .login {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  color: #000000;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.Landing .login button {
+  background-color: #BEEFF3;
+  font-family: 'Krub', sans-serif;
+  color: black;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

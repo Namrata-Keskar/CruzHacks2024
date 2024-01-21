@@ -1,3 +1,4 @@
+# HomeBase
 ## Inspiration
 **Homelessness is one of the greatest issues of our time.** CA hosts half of the unsheltered population in the United States. In the Bay Area alone, every night 38,000 people sleep on the streets. The city of Santa Cruz, has the highest unhoused population per capita in California. 
 

@@ -21,6 +21,7 @@ function AddEvent() {
   const [eventDate, setEventDate] = useState('');
   const [eventLocation, setEventLocation] = useState('');
   const [eventDescription, setEventDescription] = useState('');
+  const [category, setCategory] = useState(''); // New state for category
   const [openModal, setOpenModal] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [topics, setTopics] = useState([]); // State to store the list of topics
@@ -87,6 +88,7 @@ function AddEvent() {
     console.log("event date:", eventDate);
     console.log("event location:", eventLocation);
     console.log("event description:", eventDescription);
+    
     const eventsCollection = firestore.collection(db, 'event');
 
     try {
@@ -106,8 +108,6 @@ function AddEvent() {
     } catch (error) {
       console.error('Error adding document:', error);
     }
-
-  
   }
   // Function that calls both the submit and push function of a button
   const showModal = () =>{
@@ -155,12 +155,23 @@ function AddEvent() {
   return (
     // Chunk of code to add information about an event
     <div className="AddEvent">
-        <p> ADD EVENT Page </p>
+        <p> Add an Event </p>
+        <select 
+          value = {category}
+          onChange={(e) => setCategory(e.target.value)}
+          placeholder= "Select Category"
+          >
+          <option value="" disabled>Select category</option>
+            <option value="category1">Food</option>
+            <option value="category2">Medical</option>
+            <option value="category3">Housing</option>
+          </select>
+          
         <input
           type="text"
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
-          placeholder="Enter event details"
+          placeholder="Enter event name"
         />
         <input
           type="date"
@@ -173,7 +184,7 @@ function AddEvent() {
           value={eventLocation}
           onChange={(e) => setEventLocation(e.target.value)}
           placeholder="Enter event location"
-        />
+        />  
         <textarea
           type="text"
           value={eventDescription}

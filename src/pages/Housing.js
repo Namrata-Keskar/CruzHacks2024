@@ -19,7 +19,7 @@ function Housing() {
           <SharedCard category="Housing" />
         </div>
         <div className='map'>
-          <Map />
+          <Map category="Housing"/>
         </div>
 
       </div>

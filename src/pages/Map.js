@@ -47,6 +47,8 @@ const Map = ({ category }) => {
         const querySnapshot = await firestore.getDocs(q);
   
         const list = querySnapshot.docs.map((doc) => doc.data().location);
+        console.log("List of addresses:", list);
+
         setDbAddress(list);
 
       } catch {
@@ -98,9 +100,10 @@ const Map = ({ category }) => {
     Geocode.setApiKey('AIzaSyDrtIWBXkkbTh0yFUED8sLramXyf34ZCRU'); // Replace with your API key
     Promise.all(
       dbaddress.map((address) =>
-        Geocode.fromAddress(address.location).then(
+        Geocode.fromAddress(address).then(
           (response) => response.results[0].geometry.location
         )
+
       )
     ).then((addressCoordinates) => {
       setAddressMarkers(addressCoordinates.map((coordinate, index) => ({ id: index, position: coordinate })));

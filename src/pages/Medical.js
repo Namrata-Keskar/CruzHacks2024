@@ -20,7 +20,7 @@ function Medical() {
           <SharedCard category="Medical" />
         </div>
         <div className='map'>
-          <Map />
+          <Map category="Medical"/>
         </div>
 
       </div>

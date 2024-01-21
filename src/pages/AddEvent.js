@@ -4,7 +4,7 @@ import AfterEvent from '../popUps/afterEvent.js'
 import 'firebase/database'
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import "./AddEvent.scss";
+import "./AddEvent.css";
 import app from '../firebase.js';
 import * as firestore from "firebase/firestore"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -156,16 +156,19 @@ function AddEvent() {
     // Chunk of code to add information about an event
     <div className="AddEvent">
         <p> Add an Event </p>
-        <select 
-          value = {category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder= "Select Category"
-          >
-          <option value="" disabled>Select category</option>
-            <option value="category1">Food</option>
-            <option value="category2">Medical</option>
-            <option value="category3">Housing</option>
-          </select>
+
+        {/* Now add a drop down bar to see what category they will fall into */}
+        <select
+          value={selectedTopic}
+          onChange={(e) => setSelectedTopic(e.target.value)}
+        >
+          <option value="" disabled>Select a category</option>
+          {topics.map((topic, index) => (
+            <option key={index} value={topic.id}>
+              {topic.id}
+            </option>
+          ))}
+        </select>
           
         <input
           type="text"
@@ -192,20 +195,6 @@ function AddEvent() {
           placeholder="Enter event description"
         ></textarea>
 
-        {/* Now add a drop down bar to see what category they will fall into */}
-        <select
-          value={selectedTopic}
-          onChange={(e) => setSelectedTopic(e.target.value)}
-        >
-          <option value={selectedTopic} disabled>Select a topic</option>
-          {topics.map((topic, index) => (
-            <option key={index} value={topic.id}>
-              {topic.id}
-            </option>
-          ))}
-        </select>
-
-
         {/* <button onClick={handleSubmit}>Submit</button> */}
         {/* <button>Submit</button> */}
         {/* Whem submit button clicked, information will be passed to firebase
@@ -219,7 +208,7 @@ function AddEvent() {
           </button>
         <AfterEvent
           open={openModal} 
-          onClose={() => setOpenModal(false)} />
+          onClose={() => setOpenModal(true)} />
         </div>
 
         <button onClick={handleSignOut}>SIGN OUT</button>
